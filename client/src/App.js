@@ -3,7 +3,6 @@ import Select from './components/Select';
 
 export default function App() {
 
-
   return (
     <div className="center">
       <h2>Desafio Final do Bootcamp Full Stack</h2>

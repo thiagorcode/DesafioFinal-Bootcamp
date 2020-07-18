@@ -1,27 +1,38 @@
 import React, { useState } from 'react'
+import css from "./style.module.css"
 
 export default function Select() {
-   let [selected, setSelected] = useState({value: "red"});
+   const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+   const years = [2019, 2020, 2021];
+   let [option, setOption] = useState([])
 
-   const handleChange = (event) => {
-      setSelected({value: event.target.value});
+
+
+   const handleSelect = (event) => {
+      console.log(event.target)
    }
-   console.log(selected.value)
+   const handleClickDecrement = (event) => {
+      console.log(event.target)
+   }
+
    return (
-      <div>
-         <form action="">
-            <label htmlFor="">
-               Escolha sua Cor
-            
-               <select value={selected.value} onChange={handleChange} >
-                  Value
-                  <option value="Red">Red</option>
-                  <option value="Yellow">Yellow</option>
-                  <option value="Bleu">Red</option>
-               </select>
-            </label>
-         </form>
-      </div>
+      <div className={css.container} >
+         <button className="btn waves-effect waves-ligh" onClick={handleClickDecrement}>{"<"}</button>
+         <select className={css.select} onChange={handleSelect} on >
+            {
+               years.map(year => {
+                  return (
+                     months.map((month, index) => {
+                        return (
+                           <option key={`${year}${index}`} value={`${year}-${++index <= 9 ? "0" + index : index}`}>{`${month}/${year}`}</option>
+                        )
+                     })
+                  )
+               })
+            }
+         </select>
+         <button className="btn waves-effect waves-ligh">{">"}</button>
+      </ div>
    )
 }
 

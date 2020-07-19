@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import css from "./style.module.css"
 
-export default function Select() {
+export default function Select({ onChange }) {
    const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
    const years = [2019, 2020, 2021];
-   let [option, setOption] = useState([])
+   // let [option, setOption] = useState([])
 
 
 
    const handleSelect = (event) => {
-      console.log(event.target)
+      //console.log(event.target.value);
+      onChange(event.target.value); // Devolve para APP os dados do select (value dos options)
    }
    const handleClickDecrement = (event) => {
       console.log(event.target)
@@ -18,7 +19,7 @@ export default function Select() {
    return (
       <div className={css.container} >
          <button className="btn waves-effect waves-ligh" onClick={handleClickDecrement}>{"<"}</button>
-         <select className={css.select} onChange={handleSelect} on >
+         <select className={css.select} onChange={handleSelect} >
             {
                years.map(year => {
                   return (

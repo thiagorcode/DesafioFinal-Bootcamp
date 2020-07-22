@@ -6,7 +6,8 @@
 }
 .select {
    display: flex;
-   width: 10%;
+   width: 16%;
+   min-width: 75px;
    margin: 0 10px;
 }
 .flexRow {

@@ -1,0 +1,18 @@
+.flexRow {
+   display: flex;
+   justify-content: space-between;
+}
+.flexRow span {
+   font-size: 1.2rem;
+}
+.flexColumn {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: flex-start;
+}
+.containerFlex {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+}

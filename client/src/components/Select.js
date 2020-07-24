@@ -18,7 +18,12 @@ export default function Select({ onChange }) {
 
    return (
       <div className={css.container} >
-         <button className="btn waves-effect waves-ligh" onClick={handleClickDecrement}>{"<"}</button>
+         <button
+            className="btn waves-effect waves-ligh"
+            style={{ zIndex: "0" }}
+            onClick={handleClickDecrement}
+         >{"<"}
+         </button>
          <select className={css.select} onChange={handleSelect} >
             {
                years.map(year => {
@@ -32,7 +37,11 @@ export default function Select({ onChange }) {
                })
             }
          </select>
-         <button className="btn waves-effect waves-ligh">{">"}</button>
+         <button
+            className="btn waves-effect waves-ligh"
+            style={{ zIndex: "0" }}
+         >{">"}
+         </button>
       </ div>
    )
 }

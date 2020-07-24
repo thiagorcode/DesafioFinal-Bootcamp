@@ -3,20 +3,38 @@ import Spinner from './helpers/Spinner';
 
 import css from "./helpers/report.module.css";
 
-export default function Report({ transanctions }) {
+export default function Report({ transanctions, modal }) {
+   let id = 0
    if (transanctions !== 0) transanctions = transanctions
       .report
       .sort((a, b) => {
          return a.day - b.day;
       })
+   // Modal
+   const handleClick = () => {
+      modal()
+   }
 
    return (
       <div>
+         <div className="row">
+            <button
+               className="btn waves-effect waves-ligh col s3"
+               style={{ zIndex: "0" }}
+               onClick={handleClick}
+            >+ Novo Lançamento</button>
+            <input
+               className="col s9"
+               type="text"
+               placeholder="Filtro"
+            />
+         </div>
          {transanctions === 0 ? <Spinner /> : transanctions.map(transanction => {
             const { day, category, description, value, type } = transanction;
             return (
                <div className={css.flexRow}
-                  style={type === "-" ? styles.backgroundNegative : styles.backgroundPositive}>
+                  style={type === "-" ? styles.backgroundNegative : styles.backgroundPositive}
+                  key={id++}>
                   <div className={css.containerFlex}>
                      <span style={styles.bold}>{day <= 9 ? "0" + day : day}</span>
                      <div className={css.flexColumn}>
@@ -26,8 +44,19 @@ export default function Report({ transanctions }) {
                   </div>
                   <div>
                      <span style={styles.bold}>R$ {value}</span>
-                     <button className="btn waves-effect waves-ligh col s3"><i class="small material-icons">edit</i></button>
-                     <button className="btn waves-effect waves-ligh col s3 red"><i class="small material-icons">delete</i></button>
+                     <button
+                        className="btn waves-effect waves-ligh col s3"
+                        style={{ zIndex: "0" }}
+                        onClick={handleClick}
+                     >
+                        <i className="small material-icons">edit</i>
+                     </button>
+
+                     <button className="btn waves-effect waves-ligh col s3 red"
+                        style={{ zIndex: "0" }}
+                     >
+                        <i className="small material-icons">delete</i>
+                     </button>
 
                   </div>
                </div>

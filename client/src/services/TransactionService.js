@@ -5,5 +5,8 @@ const getAll = (date) => {
 const create = (data) => {
    return http.post('/add', data)
 }
+const remove = (id) => {
+   return http.delete(`/remove/${id}`)
+}
 
-export default { getAll, create };
+export default { getAll, create, remove };

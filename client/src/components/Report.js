@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Spinner from './helpers/Spinner';
+import ServiceHttp from "../services/TransactionService";
 
 import css from "./helpers/report.module.css";
+import Action from './Action';
 
 export default function Report({ transanctions, modal }) {
-   let id = 0
-   if (transanctions !== 0) transanctions = transanctions
+   const report = transanctions !== 0 ? transanctions
       .report
+      .map(transanction => {
+         return { ...transanction, isDeleted: true }
+      })
       .sort((a, b) => {
          return a.day - b.day;
-      })
+      }) : 0;
+
+
+   let id = 0
+   const [currentReport, setCurrentReport] = useState(report)
+   useEffect(() => {
+      setCurrentReport(report)
+   }, [])
+   console.log(currentReport);
+   const handleClickDelete = async (id) => {
+
+      let status = await ServiceHttp.remove(id);
+
+   }
+
+   const handleClickEdit = async (id) => {
+
+      //let status = await ServiceHttp.remove(id);
+
+   }
+
    // Modal
-   const handleClick = () => {
-      modal()
+   const handleClick = (id) => {
+      modal(id)
    }
 
    return (
@@ -29,9 +53,18 @@ export default function Report({ transanctions, modal }) {
                placeholder="Filtro"
             />
          </div>
-         {transanctions === 0 ? <Spinner /> : transanctions.map(transanction => {
-            const { day, category, description, value, type } = transanction;
+         {currentReport === 0 ? <Spinner /> : currentReport.map(transanction => {
+            const {
+               day,
+               category,
+               description,
+               value,
+               type,
+               _id,
+               isDeleted
+            } = transanction;
             return (
+
                <div className={css.flexRow}
                   style={type === "-" ? styles.backgroundNegative : styles.backgroundPositive}
                   key={id++}>
@@ -42,23 +75,19 @@ export default function Report({ transanctions, modal }) {
                         <span>{description}</span>
                      </div>
                   </div>
-                  <div>
+                  <div className={css.containerFlex}>
+
                      <span style={styles.bold}>R$ {value}</span>
-                     <button
-                        className="btn waves-effect waves-ligh col s3"
-                        style={{ zIndex: "0" }}
-                        onClick={handleClick}
-                     >
-                        <i className="small material-icons">edit</i>
-                     </button>
-
-                     <button className="btn waves-effect waves-ligh col s3 red"
-                        style={{ zIndex: "0" }}
-                     >
-                        <i className="small material-icons">delete</i>
-                     </button>
-
+                     {isDeleted ? (
+                        <Action
+                           id={_id}
+                           click={handleClick}
+                           deleted={handleClickDelete}
+                           edit={handleClickEdit}
+                        />) : ''
+                     }
                   </div>
+
                </div>
             )
          })}

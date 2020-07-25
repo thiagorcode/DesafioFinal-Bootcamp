@@ -20,6 +20,7 @@ export default function App() {
 
     // Quando verifica que yearMonth alterou ou a modal fechou ou abriu faz uma nova consulta
   }, [yearMonth, isModalOpen])
+
   const handleGetAll = (event) => {
     setYearMonth(event)
   }
@@ -38,9 +39,6 @@ export default function App() {
       <Select onChange={handleGetAll} />
       <Balance transanctions={current || 0} />
       <Report transanctions={current || 0} modal={handleModal} />
-
-
-
 
       {isModalOpen && (
         <ModalGrade

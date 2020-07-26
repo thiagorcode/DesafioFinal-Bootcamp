@@ -11,7 +11,13 @@ let schema = mongoose.Schema({
   yearMonthDay: String,
   type: String,
 });
+schema.method('toJSON', function () {
+  const { __V, _id, ...object } = this.toObject();
 
+  object.id = _id;
+
+  return object;
+})
 const TransactionModel = mongoose.model('transaction', schema);
 
 module.exports = TransactionModel;

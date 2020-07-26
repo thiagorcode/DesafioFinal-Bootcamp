@@ -5,7 +5,6 @@ export default function Action({ id, click, deleted, edit }) {
    // edit
    const handleClickEdi = () => {
       edit(id)
-      click()
    }
    // remove
 

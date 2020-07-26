@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import Spinner from './helpers/Spinner';
-import ServiceHttp from "../services/TransactionService";
-
-import css from "./helpers/report.module.css";
+import React, { useState } from 'react';
+import ModalGrade from '../components/ModalGrade';
 import Action from './Action';
+import Spinner from './helpers/Spinner';
 
-export default function Report({ transanctions, modal }) {
+import ServiceHttp from "../services/TransactionService";
+import css from "./helpers/report.module.css";
+
+export default function Report({ transanctions, deleted, modal }) {
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [change, setChange] = useState(false);
+   const [identifier, setIdentifier] = useState(0);
+
    const report = transanctions !== 0 ? transanctions
       .report
       .map(transanction => {
@@ -13,31 +18,25 @@ export default function Report({ transanctions, modal }) {
       })
       .sort((a, b) => {
          return a.day - b.day;
-      }) : 0;
+      })
+      : 0;
+   let idKey = 0
 
-
-   let id = 0
-   const [currentReport, setCurrentReport] = useState(report)
-   useEffect(() => {
-      setCurrentReport(report)
-   }, [])
-   console.log(currentReport);
-   const handleClickDelete = async (id) => {
-
-      let status = await ServiceHttp.remove(id);
-
+   const handleModal = (edit, id) => {
+      setIdentifier(id)
+      setChange(edit)
+      setIsModalOpen(true)
+      modal(true)
    }
+   const handleClose = () => {
+      setIsModalOpen(false);
+      modal(false)
+   };
 
-   const handleClickEdit = async (id) => {
-
-      //let status = await ServiceHttp.remove(id);
-
+   const handleClickDeleted = async (id) => {
+      deleted(id)
    }
-
-   // Modal
-   const handleClick = (id) => {
-      modal(id)
-   }
+   //identifier={identifier}
 
    return (
       <div>
@@ -45,7 +44,7 @@ export default function Report({ transanctions, modal }) {
             <button
                className="btn waves-effect waves-ligh col s3"
                style={{ zIndex: "0" }}
-               onClick={handleClick}
+               onClick={() => handleModal(false)}
             >+ Novo Lançamento</button>
             <input
                className="col s9"
@@ -53,21 +52,20 @@ export default function Report({ transanctions, modal }) {
                placeholder="Filtro"
             />
          </div>
-         {currentReport === 0 ? <Spinner /> : currentReport.map(transanction => {
+         {report === 0 ? <Spinner /> : report.map(transanction => {
             const {
                day,
                category,
                description,
                value,
                type,
-               _id,
-               isDeleted
+               id,
             } = transanction;
             return (
 
                <div className={css.flexRow}
                   style={type === "-" ? styles.backgroundNegative : styles.backgroundPositive}
-                  key={id++}>
+                  key={idKey++}>
                   <div className={css.containerFlex}>
                      <span style={styles.bold}>{day <= 9 ? "0" + day : day}</span>
                      <div className={css.flexColumn}>
@@ -76,21 +74,28 @@ export default function Report({ transanctions, modal }) {
                      </div>
                   </div>
                   <div className={css.containerFlex}>
-
                      <span style={styles.bold}>R$ {value}</span>
-                     {isDeleted ? (
-                        <Action
-                           id={_id}
-                           click={handleClick}
-                           deleted={handleClickDelete}
-                           edit={handleClickEdit}
-                        />) : ''
-                     }
+                     <Action
+                        id={id}
+                        deleted={handleClickDeleted}
+                        edit={() => handleModal(true, id)}
+
+                     />)
+
                   </div>
+
 
                </div>
             )
          })}
+         {isModalOpen && (
+            <ModalGrade
+               change={change}
+               onClose={handleClose}
+               identifier={identifier}
+            />
+         )
+         }
       </div>
    )
 }

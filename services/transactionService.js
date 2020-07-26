@@ -20,6 +20,22 @@ const findAll = async (req, res) => {
          .send({ message: error.message || 'Algum erro ocorreu ao procurar' })
    }
 }
+const findOne = async (req, res) => {
+   try {
+
+      const { id } = req.params;
+      const report = await TransactionModel.findById(id)
+
+      res.send({
+         report
+      })
+      res.end()
+   } catch (error) {
+      res
+         .status(500)
+         .send({ message: error.message || 'Algum erro ocorreu ao procurar' })
+   }
+}
 
 const create = async (req, res) => {
    try {
@@ -63,4 +79,4 @@ const update = async (req, res) => {
 
 }
 
-module.exports = { findAll, create, remove, update }
+module.exports = { findAll, create, remove, update, findOne }

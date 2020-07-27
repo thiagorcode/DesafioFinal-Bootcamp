@@ -163,6 +163,7 @@ export default function ModalGrade({ onClose, identifier, change }) {
                            required
                            name="value"
                            min="0"
+                           step="0,01"
                            onChange={handleInputChange}
                            value={gradeForm.value}
                         />

@@ -38,7 +38,7 @@ export default function App() {
     <div className="container center">
       <h4>Desafio Final do Bootcamp Full Stack</h4>
       <h5>Controle Financeiro Pessoal</h5>
-
+      <p>Feito por<a href="https://www.linkedin.com/in/thiagorodrig/">Thiago Rodrigues </a></p>
       <Select onChange={handleGetAll} />
       <Balance transanctions={current} />
       <Report
@@ -46,6 +46,8 @@ export default function App() {
         deleted={handleClickDeleted}
         modal={handleModified}
       />
+
+
 
 
     </div>

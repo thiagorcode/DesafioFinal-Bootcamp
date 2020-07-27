@@ -26,7 +26,6 @@ export default function ModalGrade({ onClose, identifier, change }) {
       setGradeForm(find.data.report)
 
    }
-   console.log(gradeForm)
    useEffect(() => {
       if (change) getData(identifier)
    }, [identifier])
@@ -94,15 +93,17 @@ export default function ModalGrade({ onClose, identifier, change }) {
       <div  >
          <Modal isOpen={true} >
             <div className={css.row}>
-               <div >
-                  {
-                     !change ? <h3>Novo Lançamento</h3> : <h3>Editar Lançamento</h3>
-                  }
+               <div className={css.menu} >
+                  <h3 className="">
+                     {
+                        !change ? "Novo Lançamento" : "Editar Lançamento"
+                     }
+                  </h3>
                   <button className="waves-effect waves-lights btn red dark-4"
                      onClick={handleModalClose}>X</button>
                </div>
                <form onSubmit={!change ? handleFormSubmit : handleClickUpdate}>
-                  <div>
+                  <div className={css.select}>
                      <p>
                         <label>
                            <input
@@ -110,9 +111,11 @@ export default function ModalGrade({ onClose, identifier, change }) {
                               type="radio"
                               value="-"
                               required
+                              disabled={change ? true : false}
+                              checked={change && gradeForm.type === "-" ? true : null}
                               onChange={handleInputChange}
                            />
-                           <span>Despesa</span>
+                           <span style={{ fontSize: "22px" }}>Despesa</span>
                         </label>
                      </p>
                      <p>
@@ -122,9 +125,11 @@ export default function ModalGrade({ onClose, identifier, change }) {
                               type="radio"
                               value="+"
                               required
+                              disabled={change ? true : false}
+                              checked={change && gradeForm.type === "+" ? true : null}
                               onChange={handleInputChange}
                            />
-                           <span>Receita</span>
+                           <span style={{ fontSize: "22px" }}>Receita</span>
                         </label>
                      </p>
                   </div>
@@ -150,28 +155,30 @@ export default function ModalGrade({ onClose, identifier, change }) {
                      />
                      <label htmlFor="category" className="active">Categoria:</label>
                   </div>
-                  <div className="input-field">
-                     <input
-                        type="number"
-                        id="value"
-                        required
-                        name="value"
-                        min="0"
-                        onChange={handleInputChange}
-                        value={gradeForm.value}
-                     />
-                     <label htmlFor="value" className="active">Valor:</label>
-                  </div>
-                  <div className="input-field">
-                     <input
-                        type="date"
-                        name="date"
-                        required
-                        id="date"
-                        onChange={handleInputChange}
-                        value={gradeForm.yearMonthDay}
-                     />
-                     <label htmlFor="date" className="active">Data:</label>
+                  <div className="row">
+                     <div className="input-field col s6">
+                        <input
+                           type="number"
+                           id="value"
+                           required
+                           name="value"
+                           min="0"
+                           onChange={handleInputChange}
+                           value={gradeForm.value}
+                        />
+                        <label htmlFor="value" className="active">Valor:</label>
+                     </div>
+                     <div className="input-field col s6">
+                        <input
+                           type="date"
+                           name="date"
+                           required
+                           id="date"
+                           onChange={handleInputChange}
+                           value={gradeForm.yearMonthDay}
+                        />
+                        <label htmlFor="date" className="active">Data:</label>
+                     </div>
                   </div>
                   <button className="btn waves-effect waves-ligh col s3" >Enviar</button>
                </form>

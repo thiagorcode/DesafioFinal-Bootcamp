@@ -79,12 +79,9 @@ export default function Report({ transanctions, deleted, modal }) {
                         id={id}
                         deleted={handleClickDeleted}
                         edit={() => handleModal(true, id)}
-
-                     />)
+                     />
 
                   </div>
-
-
                </div>
             )
          })}

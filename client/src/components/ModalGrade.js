@@ -7,6 +7,17 @@ import css from "./helpers/modal.module.css";
 Modal.setAppElement('#root')
 
 export default function ModalGrade({ onClose, identifier, change }) {
+   // Style modal
+   const customStyles = {
+      content: {
+         top: '50%',
+         left: '50%',
+         right: 'auto',
+         bottom: 'auto',
+         marginRight: '-50%',
+         transform: 'translate(-50%, -50%)'
+      }
+   };
    const initialForm = {
       description: "",
       type: "",
@@ -91,7 +102,10 @@ export default function ModalGrade({ onClose, identifier, change }) {
 
    return (
       <div  >
-         <Modal isOpen={true} >
+         <Modal
+            isOpen={true}
+            style={customStyles}
+         >
             <div className={css.row}>
                <div className={css.menu} >
                   <h3 className="">

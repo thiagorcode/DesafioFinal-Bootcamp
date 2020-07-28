@@ -3,10 +3,9 @@ import ModalGrade from '../components/ModalGrade';
 import Action from './Action';
 import Spinner from './helpers/Spinner';
 
-import ServiceHttp from "../services/TransactionService";
 import css from "./helpers/report.module.css";
 
-export default function Report({ transanctions, deleted, modal }) {
+export default function Report({ transanctions, deleted, modal, filter }) {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [change, setChange] = useState(false);
    const [identifier, setIdentifier] = useState(0);
@@ -33,10 +32,14 @@ export default function Report({ transanctions, deleted, modal }) {
       modal(false)
    };
 
-   const handleClickDeleted = async (id) => {
+   const handleClickDeleted = (id) => {
       deleted(id)
    }
-   //identifier={identifier}
+
+   const handleChangeFilter = (event) => {
+      filter(event.target.value)
+   }
+
 
    return (
       <div>
@@ -50,6 +53,7 @@ export default function Report({ transanctions, deleted, modal }) {
                className="col s9"
                type="text"
                placeholder="Filtro"
+               onChange={handleChangeFilter}
             />
          </div>
          {report === 0 ? <Spinner /> : report.map(transanction => {
@@ -99,18 +103,18 @@ export default function Report({ transanctions, deleted, modal }) {
 
 const styles = {
    backgroundPositive: {
-      padding: "20px",
+      padding: "15px",
       margin: "5px 0",
       backgroundColor: "#A1F0DC"
    },
    backgroundNegative: {
-      padding: "20px",
+      padding: "15px",
       margin: "5px 0",
       backgroundColor: "#F0A1A8"
    },
    bold: {
       fontWeight: "bold",
       fontSize: "1.5rem",
-      padding: "0 10px"
+      padding: "0 5px"
    }
 }

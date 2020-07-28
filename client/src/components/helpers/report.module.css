@@ -14,5 +14,13 @@
 .containerFlex {
    display: flex;
    flex-direction: row;
-   flex-wrap: wrap;
+}
+
+@media screen and (max-width: 400px) {
+   .containerFlex {
+      flex-direction: column;
+      max-width: 150px;
+      align-items: end;
+      text-align: initial;
+   }
 }

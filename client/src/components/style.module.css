@@ -7,7 +7,7 @@
 .select {
    display: flex;
    width: 16%;
-   min-width: 75px;
+   min-width: 125px;
    margin: 0 10px;
 }
 .flexRow {
@@ -16,6 +16,7 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
+   flex-wrap: wrap;
 }
 .flexRow p {
    font-size: 16px;

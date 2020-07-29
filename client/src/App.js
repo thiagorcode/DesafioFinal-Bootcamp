@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Select from './components/Select';
-
-import ServiceHttp from "./services/TransactionService";
 import Balance from './components/Balance';
 import Report from './components/Report';
 
+import ServiceHttp from "./services/TransactionService";
 
 export default function App() {
   const [current, setCurrent] = useState(0);
@@ -20,6 +19,7 @@ export default function App() {
       const investigate = data.report.filter(inv => {
         return inv.description.toLowerCase().indexOf(changeFilter.toLowerCase()) > -1;
       })
+
       const newData = { length: investigate.length, report: investigate }
       setCurrent(newData);
     }

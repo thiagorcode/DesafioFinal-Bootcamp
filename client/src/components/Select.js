@@ -12,7 +12,6 @@ export default function Select({ onChange }) {
       setPeriod(select[0])
    }, [setPeriod, setCurrentPeriod])
 
-   console.log(period.length)
 
    const handleSelect = (event) => {
       setCurrentPeriod(period.selectedIndex)

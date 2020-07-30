@@ -4,6 +4,7 @@ import Action from './Action';
 import Spinner from './helpers/Spinner';
 
 import css from "./helpers/report.module.css";
+import format from "../components/helpers/formatHelpers";
 
 export default function Report({ transanctions, deleted, modal, filter }) {
    const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,8 +78,8 @@ export default function Report({ transanctions, deleted, modal, filter }) {
                         <span>{description}</span>
                      </div>
                   </div>
-                  <div className={css.containerFlex}>
-                     <span style={styles.bold}>R$ {value}</span>
+                  <div className={css.containerValue}>
+                     <span style={styles.bold}>R$ {format.formatNumber(value)}</span>
                      <Action
                         id={id}
                         deleted={handleClickDeleted}

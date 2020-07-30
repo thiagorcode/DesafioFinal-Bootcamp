@@ -16,10 +16,16 @@ export default function App() {
 
       const currentTrasanction = await ServiceHttp.getAll(yearMonth);
       const { data } = currentTrasanction;
-      const investigate = data.report.filter(inv => {
-        return inv.description.toLowerCase().indexOf(changeFilter.toLowerCase()) > -1;
-      })
-
+      const investigate = data.report
+        .map(report => {
+          return {
+            ...report,
+            value: parseFloat(report.value),
+          }
+        })
+        .filter(inv => {
+          return inv.description.toLowerCase().indexOf(changeFilter.toLowerCase()) > -1;
+        })
       const newData = { length: investigate.length, report: investigate }
       setCurrent(newData);
     }

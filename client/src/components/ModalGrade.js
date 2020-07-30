@@ -3,6 +3,7 @@ import Modal from "react-modal"
 
 import ServiceHttp from "../services/TransactionService";
 import css from "./helpers/modal.module.css";
+import format from "../components/helpers/formatHelpers"
 
 Modal.setAppElement('#root')
 
@@ -44,7 +45,11 @@ export default function ModalGrade({ onClose, identifier, change }) {
    let valueDate = ""
    const handleInputChange = (event) => {
       const { name, value } = event.target;
-
+      if (name === "number") {
+         const newValue = format.formatNumber(value)
+         setGradeForm({ ...gradeForm, [name]: newValue });
+         return
+      }
       if (name === "date") { // Tira os - de date separa campo YYYY MM DD   
          valueDate = value.split("-");
          setGradeForm({
@@ -85,7 +90,7 @@ export default function ModalGrade({ onClose, identifier, change }) {
       const data = {
          description: gradeForm.description,
          type: gradeForm.type,
-         value: parseInt(gradeForm.value),
+         value: parseFloat(gradeForm.value),
          category: gradeForm.category,
          year: gradeForm.year,
          month: gradeForm.month,
@@ -177,7 +182,7 @@ export default function ModalGrade({ onClose, identifier, change }) {
                            required
                            name="value"
                            min="0"
-                           step="0,01"
+                           step="0.01"
                            onChange={handleInputChange}
                            value={gradeForm.value}
                         />

@@ -1,3 +1,4 @@
+import format from "./formatHelpers";
 
 const result = (transanctions) => {
    let negative = 0
@@ -9,7 +10,7 @@ const result = (transanctions) => {
          let id = 0
          return {
             id: ++id,
-            value,
+            value: parseFloat(value),
             type,
          }
       })
@@ -25,7 +26,11 @@ const result = (transanctions) => {
 
       total = some - negative;
 
-      return { negative, some, total }
+      return {
+         negative: format.formatNumber(negative),
+         some: format.formatNumber(some),
+         total: format.formatNumber(total),
+      }
    }
    else {
       return { some, negative, total }
